@@ -19,7 +19,7 @@ module.exports = {
       include: __dirname,
       use: [{
         loader: 'babel-loader',
-      }, ],
-    }, ],
+      }],
+    }],
   },
 };
