@@ -12,18 +12,14 @@ module.exports = {
   mode: 'development',
   target: 'node',
   module: {
-    rules: [
-      {
-        test: /\.js$/, // include .js files
-        enforce: 'pre', // preload the jshint loader
-        exclude: /node_modules/, // exclude any and all files in the node_modules folder
-        include: __dirname,
-        use: [
-          {
-            loader: 'babel-loader',
-          },
-        ],
-      },
-    ],
+    rules: [{
+      test: /\.js$/, // include .js files
+      enforce: 'pre', // preload the jshint loader
+      exclude: /node_modules/, // exclude any and all files in the node_modules folder
+      include: __dirname,
+      use: [{
+        loader: 'babel-loader',
+      }, ],
+    }, ],
   },
 };

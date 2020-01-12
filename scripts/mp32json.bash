@@ -3,7 +3,7 @@
 which ffprobe >/dev/null
 
 input_dir="$(cd "$1" && pwd)"
-output_dir="$(cd "$(dirname "$0")" && pwd)/../data/mp3"
+output_dir="$(cd "$(dirname "$0")" && pwd)/../data/json"
 
 (
   cd "$input_dir"
