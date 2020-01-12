@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Serverless webpack example using ecma script",
   "scripts": {
+    "lunr:index": "node src/services/indexing.js",
+    "lunr:search": "node src/services/searching.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {

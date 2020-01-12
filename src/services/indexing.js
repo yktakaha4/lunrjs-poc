@@ -1,7 +1,8 @@
 const fs = require('fs-extra');
 const path = require('path');
 const zlib = require('zlib');
-const {createMusicIndex} = require('./models/lunr');
+const crypto = require('crypto');
+const {createMusicIndex} = require('../models/lunr');
 
 
 const walk = async (rootPath) => {
@@ -34,6 +35,7 @@ const create = async (jsonDirectoryPath, indexDirectoryPath) => {
     for (filePath of filePaths) {
       const json = fs.readJsonSync(filePath);
       index.add({
+        // id: crypto.createHash('md5').update(json.format.filename).digest('hex'),
         id: json.format.filename,
         title: json.format.tags.title,
         artist: json.format.tags.artist,
@@ -46,8 +48,10 @@ const create = async (jsonDirectoryPath, indexDirectoryPath) => {
     }
   });
 
+  await fs.ensureDir(indexDirectoryPath);
+  await fs.writeJson(path.join(indexDirectoryPath, 'music.json'), index);
   await fs.writeFile(
-      path.join(indexDirectoryPath, 'music.index.gz'),
+      path.join(indexDirectoryPath, 'music.json.gz'),
       await new Promise((resolve, reject) => {
         zlib.gzip(JSON.stringify(index),
             (err, result) => err ? reject(err) : resolve(result));

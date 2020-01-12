@@ -2,6 +2,7 @@ const lunr = require('lunr');
 
 require('lunr-languages/lunr.stemmer.support.js')(lunr);
 require('lunr-languages/tinyseg.js')(lunr);
+require('lunr-languages/lunr.multi.js')(lunr);
 require('lunr-languages/lunr.ja.js')(lunr);
 
 const createMusicIndex = (callback) => {
@@ -17,7 +18,7 @@ const createMusicIndex = (callback) => {
     index.field('year');
     index.field('genre');
 
-    index.use(lunr.ja);
+    index.use(lunr.multiLanguage('ja', 'en'));
 
     callback(index);
   });
