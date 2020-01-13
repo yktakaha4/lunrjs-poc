@@ -13,11 +13,7 @@ provider:
   runtime: nodejs12.x
 
 functions:
-  first:
-    handler: first.hello
-  second:
-    handler: second.hello
-    events:
-      - http:
-          method: get
-          path: second
+  index:
+    handler: src/api/index.lambdaHandler
+  search:
+    handler: src/api/search.lambdaHandler
