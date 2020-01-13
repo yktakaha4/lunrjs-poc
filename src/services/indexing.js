@@ -1,7 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
 const zlib = require('zlib');
-const crypto = require('crypto');
 const {createMusicIndex} = require('../models/lunr');
 
 
@@ -31,19 +30,25 @@ const create = async (jsonDirectoryPath, indexDirectoryPath) => {
   console.info(`found ${filePaths.length} files...`);
 
   console.info('creating index...');
-  const index = createMusicIndex((index) => {
+  const index = await createMusicIndex((index) => {
     for (filePath of filePaths) {
       const json = fs.readJsonSync(filePath);
       index.add({
-        // id: crypto.createHash('md5').update(json.format.filename).digest('hex'),
         id: json.format.filename,
         title: json.format.tags.title,
+        album: json.format.tags.album,
         artist: json.format.tags.artist,
         artistReading: json.format.tags.TSP,
         albumArtist: json.format.tags.album_artist,
         albumArtistReading: json.format.tags.TS2,
         year: json.format.tags.date,
         genre: json.format.tags.genre,
+        kuromojiTokens: [
+          json.format.tags.title,
+          json.format.tags.album,
+          json.format.tags.artist,
+          json.format.tags.album_artist,
+        ].join(' '),
       });
     }
   });
